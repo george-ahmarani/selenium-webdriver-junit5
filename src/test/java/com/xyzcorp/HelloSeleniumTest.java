@@ -12,6 +12,11 @@ public class HelloSeleniumTest {
 
     private static ChromeDriver chromeDriver;
 
+    /**
+     * This is the setup. The issue is that we did not use a DriverManager
+     * DriverManager's will download and manage the appropriate driver.
+     * This is not it.
+     */
     @BeforeAll
     public static void setup() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\george.ahmarani\\chrome-drivers\\98\\chromedriver_win32\\chromedriver.exe");
