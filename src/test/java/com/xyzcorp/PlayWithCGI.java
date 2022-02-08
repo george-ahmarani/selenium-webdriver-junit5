@@ -30,8 +30,15 @@ public class PlayWithCGI {
                 "https://www.cgi.com/en/search/site?keyword=business%20consulting");
 
         //anchor
-        WebElement articleContainer = driver.findElement
-                (By.cssSelector("#block-cgi-default-content > div.solr-search-result-wrapper"));
+        // Using CssSelector
+        // WebElement articleContainer = driver.findElement
+        //        (By.cssSelector("#block-cgi-default-content > div.solr-search-result-wrapper"));
+
+        // Using xpath when searching with CTRL-F
+        // WebElement articleContainer = driver.findElement(By.xpath("//div[@class=\"solr-search-result-wrapper\"]"));
+
+        // Using xpath by copying the xpath from the inspector
+        WebElement articleContainer = driver.findElement(By.xpath("//*[@id=\"block-cgi-default-content\"]/div[3]"));
 
         //sections inside the anchor
         List<WebElement> sections = articleContainer.findElements(By.tagName("section"));
