@@ -29,7 +29,7 @@ public class CGI_lab {
     @AfterEach
     void teardown() throws InterruptedException {
         // FIXME: pause for manual browser inspection
-        Thread.sleep(Duration.ofSeconds(10).toMillis());
+        Thread.sleep(Duration.ofSeconds(20).toMillis());
 
         driver.quit();
     }
@@ -69,27 +69,16 @@ public class CGI_lab {
         Cookie newCookie6 = new Cookie("RT", "z=1&dm=www.cgi.com&si=2ca24813-faa7-4e50-8026-ff4b767b113e&ss=kzegyjrz&sl=f&tt=hbf&bcn=%2F%2F173bf10a.akstat.io%2F&obo=4&rl=1", ".cgi.com", "/", new java.util.Date(2024, 10, 11, 0, 0, 0));
 
         // Adding cookies to the website
-        options.addCookie(newCookie1);
-        options.addCookie(newCookie2);
-        options.addCookie(newCookie3);
-        options.addCookie(newCookie4);
-        options.addCookie(newCookie5);
-        options.addCookie(newCookie6);
+        addingCookies(options, newCookie1, newCookie2, newCookie3, newCookie4, newCookie5, newCookie6);
 
 
         // Getting cookies values
-        String readValue1 = options.getCookieNamed(newCookie1.getName())
-                .getValue();
-        String readValue2 = options.getCookieNamed(newCookie2.getName())
-                .getValue();
-        String readValue3 = options.getCookieNamed(newCookie3.getName())
-                .getValue();
-        String readValue4 = options.getCookieNamed(newCookie4.getName())
-                .getValue();
-        String readValue5 = options.getCookieNamed(newCookie5.getName())
-                .getValue();
-        String readValue6 = options.getCookieNamed(newCookie6.getName())
-                .getValue();
+        String readValue1 = getValue(options, newCookie1);
+        String readValue2 = getValue(options, newCookie2);
+        String readValue3 = getValue(options, newCookie3);
+        String readValue4 = getValue(options, newCookie4);
+        String readValue5 = getValue(options, newCookie5);
+        String readValue6 = getValue(options, newCookie6);
 
         // Check if cookies are added correctly
         assertThat(newCookie1.getValue()).isEqualTo(readValue1);
@@ -102,5 +91,19 @@ public class CGI_lab {
         assertThat(options.getCookieNamed("cookie-agreed-version").getValue()).isEqualTo("1.0.0");
 
         driver.navigate().refresh();
+    }
+
+    private String getValue(WebDriver.Options options, Cookie newCookie1) {
+        return options.getCookieNamed(newCookie1.getName())
+                .getValue();
+    }
+
+    private void addingCookies(WebDriver.Options options, Cookie newCookie1, Cookie newCookie2, Cookie newCookie3, Cookie newCookie4, Cookie newCookie5, Cookie newCookie6) {
+        options.addCookie(newCookie1);
+        options.addCookie(newCookie2);
+        options.addCookie(newCookie3);
+        options.addCookie(newCookie4);
+        options.addCookie(newCookie5);
+        options.addCookie(newCookie6);
     }
 }
