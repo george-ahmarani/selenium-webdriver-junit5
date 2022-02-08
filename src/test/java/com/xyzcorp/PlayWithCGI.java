@@ -9,6 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
 
 public class PlayWithCGI {
 
@@ -25,9 +29,13 @@ public class PlayWithCGI {
     }
 
     @Test
-    void testRelativeLocators() {
+    void testRelativeLocators() throws IOException {
         driver.get(
                 "https://www.cgi.com/en/search/site?keyword=business%20consulting");
+
+        InputStream resourceAsStream = this.getClass().getResourceAsStream("/locators.properties");
+        Properties properties = new Properties();
+        properties.load(resourceAsStream);
 
         //anchor
         // Using CssSelector
@@ -38,7 +46,13 @@ public class PlayWithCGI {
         // WebElement articleContainer = driver.findElement(By.xpath("//div[@class=\"solr-search-result-wrapper\"]"));
 
         // Using xpath by copying the xpath from the inspector
-        WebElement articleContainer = driver.findElement(By.xpath("//*[@id=\"block-cgi-default-content\"]/div[3]"));
+        // WebElement articleContainer = driver.findElement(By.xpath("//*[@id=\"block-cgi-default-content\"]/div[3]"));
+
+        // Using external file for cssSelector
+        WebElement articleContainer = driver.findElement(By.cssSelector(properties.getProperty("article-head-css")));
+
+        // Using external file for xpath
+        // WebElement articleContainer = driver.findElement(By.xpath(properties.getProperty("article-head")));
 
         //sections inside the anchor
         List<WebElement> sections = articleContainer.findElements(By.tagName("section"));
